@@ -1,6 +1,8 @@
 # 🦀 cryptopals-rust
 
-Rust solutions to the https://cryptopals.com/ problem sets, using nothing but `std`, no external libraries, and an emphasis on from-scratch solutions.
+Rust solutions to the https://cryptopals.com/ problem sets, using nothing but `std`, no external libraries**, and an emphasis on from-scratch solutions.
+
+** With the exception of `structopt` to add CLI friendliness, but this is not essential.
 
 # Set 1
 * Convert hex to base64
