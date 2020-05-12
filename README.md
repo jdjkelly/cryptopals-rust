@@ -12,7 +12,11 @@ Rust solutions to the https://cryptopals.com/ problem sets, using nothing but `s
   - Convert each string to a `vec[u8]` using existing `hex` module from previous exercise
   - Iterate through each byte in A, use XOR operator `^` on the same index position in B
   - Re-encode result back to hex by splitting each u8 into two 4-bit values with bitwise operations
-* Single-byte XOR cipher
+* ⚠️ Single-byte XOR cipher
+  - Not a complete answer, but the last part is trivial (char frequence counting)
+  - Just iterate through the given hex with the possible values 0x0 through 0xFF
+  - Take the resulting Vec<Vec<u8>> and convert to ascii
+  - (todo) Analyze the results for frequency of letters matching expected values in english
 * Detect single-character XOR
 * Implement repeating-key XOR
 * Break repeating-key XOR

@@ -46,3 +46,30 @@ fn test_s1c2() {
         "746865206b696420646f6e277420706c6179"
     )
 }
+
+// Breaking Single-byte XOR cipher
+fn s1c3(hex: String) {
+    let decoded_hex = hex::decode(hex.into_bytes()).unwrap();
+
+    for candidate in 0x0..=0xFF {
+        // create possible candidates by xoring each possible full byte
+        let xor_op: Vec<u8> = decoded_hex.iter().map(|byte| {
+            byte ^ candidate
+        }).collect();
+
+        // convert the candidate to ascii
+        let to_char: Vec<char> = xor_op.iter().map(|&n| {
+            n as char
+        }).collect();
+
+        // convert the vector of characters into a string for convenience
+        let result: String = to_char.into_iter().collect();
+        println!("{}", result)
+    };
+}
+
+#[test]
+fn test_s1c3() {
+    assert_eq!(true, true);
+    s1c3(String::from("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"));
+}
