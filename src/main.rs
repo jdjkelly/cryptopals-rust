@@ -1,6 +1,7 @@
 
 mod hex;
 mod base64;
+mod freq;
 
 fn main() {
     println!("cryptopals-rust: why not run the test?")
@@ -48,8 +49,10 @@ fn test_s1c2() {
 }
 
 // Breaking Single-byte XOR cipher
-fn s1c3(hex: String) {
+fn s1c3(hex: String) -> String {
     let decoded_hex = hex::decode(hex.into_bytes()).unwrap();
+
+    let mut best: (Vec<char>, f32) = (vec![' '], 0f32);
 
     for candidate in 0x0..=0xFF {
         // create possible candidates by xoring each possible full byte
@@ -63,13 +66,19 @@ fn s1c3(hex: String) {
         }).collect();
 
         // convert the vector of characters into a string for convenience
-        let result: String = to_char.into_iter().collect();
-        println!("{}", result)
+        // let result: String = to_char.into_iter().collect();
+
+        let score = freq::score(&to_char);
+        
+        if best.1 < score {
+            best = (to_char, score);
+        }
     };
+
+    best.0.into_iter().collect()
 }
 
 #[test]
 fn test_s1c3() {
-    assert_eq!(true, true);
-    s1c3(String::from("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"));
+    assert_eq!(s1c3(String::from("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736")), String::from("Cooking MC\'s like a pound of bacon"));
 }
