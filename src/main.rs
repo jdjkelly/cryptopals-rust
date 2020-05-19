@@ -1,3 +1,5 @@
+use std::fs::File;
+use std::io::{self, BufRead};
 
 mod hex;
 mod base64;
@@ -81,4 +83,34 @@ fn s1c3(hex: String) -> String {
 #[test]
 fn test_s1c3() {
     assert_eq!(s1c3(String::from("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736")), String::from("Cooking MC\'s like a pound of bacon"));
+}
+
+
+fn s1c4() {
+    let data = File::open("./data/4.txt").unwrap();
+    let lines = io::BufReader::new(data).lines();
+
+    let mut best_of_each: Vec<String> = Vec::new();
+
+    for line in lines {
+        best_of_each.push(s1c3(line.unwrap().to_string()));
+    };
+
+    let mut best: (Vec<char>, f32) = (vec![' '], 0f32);
+
+    for n in best_of_each {
+        // n.as_bytes()
+        let score = freq::score(n);
+        
+        if best.1 < score {
+            best = (n, score);
+        }
+    };
+
+    best
+}
+
+#[test]
+fn test_s1c4() {
+    s1c4();
 }
